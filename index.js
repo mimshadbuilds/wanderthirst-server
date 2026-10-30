@@ -26,7 +26,7 @@ const proxyToken = async(req, res, next) => {
     }
     
     try {
-        const JWKS = createRemoteJWKSet(new URL('http://localhost:3000/api/auth/jwks'));
+        const JWKS = createRemoteJWKSet(new URL(`${process.env.CLIENT_URL}/api/auth/jwks`));
 
         const { payload } = await jwtVerify(token, JWKS)
         req.user = payload;
@@ -161,3 +161,5 @@ app.get('/bookings/count', proxyToken, requireAdmin, async (req, res) => {
 app.listen(port, () => {
     console.log(`Wanderthrist server is running on port ${port}`)
 })
+
+export default app;
